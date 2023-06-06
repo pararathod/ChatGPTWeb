@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using OpenAI.GPT3.Managers;
 using OpenAI.GPT3;
@@ -43,10 +42,6 @@ namespace ChatGPTWeb.Pages
 
                 Regex rgx = new Regex(pattern);
                 PlainText = rgx.Replace(plainText, replacement);
-                // PlainText = await File.ReadAllTextAsync(plainText);
-
-                // await JSRuntime.InvokeAsync<object>("saveFile", "index.txt", PlainText);
-                // await CallService();
             }
         }
 
@@ -61,7 +56,6 @@ namespace ChatGPTWeb.Pages
             await openAiService.Completions
             .CreateCompletion(new CompletionCreateRequest()
             {
-                //Prompt = "Please summarize key points as as Minutes of Meeting as bullets with title as 'Minutes of meeting' and Actions items seperately after Minutes of Meetings in a tabular format in HTML and titles in heading tag (h2). :\n" + @Regex.Replace(prompt, "<.*?>", String.Empty),
                 Prompt = promptHeader + @Regex.Replace(PlainText, "<.*?>", String.Empty),
                 MaxTokens = 4000
             }, Models.TextDavinciV3);
