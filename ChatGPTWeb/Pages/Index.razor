@@ -1,9 +1,35 @@
 ﻿@page "/"
+@using OpenAI.GPT3;
+@using OpenAI.GPT3.Managers;
+@using OpenAI.GPT3.ObjectModels;
+@using OpenAI.GPT3.ObjectModels.RequestModels;
+@using OpenAI.GPT3.Extensions;
+@using Radzen;
+@using Radzen.Blazor;
+@using System.Text.RegularExpressions;
 
-<PageTitle>Index</PageTitle>
+<PageTitle>fetchdata</PageTitle>
+<h1 align="center">Convert transcript of any meet to <abbr title="Minutes of Meeting">MOM</abbr></h1>
 
-<h1>Hello, world!</h1>
+<br />
+<div>
+    <span><h3>Let the engine know as what you expect : </h3></span>
+    <input class="form-control" type="text"
+       @bind="promptHeader" />
+</div>
+<br />
+<div>
+    <h3>Transcript:</h3>
+    <InputFile OnChange="@OnInputFile" />
+</div>
 
-Welcome to your new app.
+<br />
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<RadzenButton Text="Generate Minutes of Meeting" Click="@CallService" />
+
+<br />
+<br />
+<div>Response:</div>
+<br />
+<p>@((MarkupString)response)</p>
+
