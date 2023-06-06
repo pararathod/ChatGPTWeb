@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatGPTWeb", "ChatGPTWeb\ChatGPTWeb.csproj", "{E0CBAF83-C66A-4542-89DF-04F17AF621F1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatGPTAPI", "ChatGPTAPI\ChatGPTAPI.csproj", "{497EF1AA-57AF-4F9C-981C-DE5D8D29FDD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatGPTXUnitTest", "ChatGPTXUnitTest\ChatGPTXUnitTest.csproj", "{13F22832-C95C-4887-8067-FA95646F9862}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E0CBAF83-C66A-4542-89DF-04F17AF621F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0CBAF83-C66A-4542-89DF-04F17AF621F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0CBAF83-C66A-4542-89DF-04F17AF621F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0CBAF83-C66A-4542-89DF-04F17AF621F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{497EF1AA-57AF-4F9C-981C-DE5D8D29FDD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{497EF1AA-57AF-4F9C-981C-DE5D8D29FDD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{497EF1AA-57AF-4F9C-981C-DE5D8D29FDD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{497EF1AA-57AF-4F9C-981C-DE5D8D29FDD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13F22832-C95C-4887-8067-FA95646F9862}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13F22832-C95C-4887-8067-FA95646F9862}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13F22832-C95C-4887-8067-FA95646F9862}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13F22832-C95C-4887-8067-FA95646F9862}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6AD150E9-1822-4137-A568-3E681F4794A5}
+	EndGlobalSection
+EndGlobal
