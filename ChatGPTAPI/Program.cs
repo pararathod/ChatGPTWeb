@@ -1,3 +1,5 @@
+using OpenAI.GPT3.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +8,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Configuration.AddJsonFile(
+        "appsettings.json", optional: true, reloadOnChange: true
+    ).AddEnvironmentVariables();
+builder.Services.AddOpenAIService();
 
 var app = builder.Build();
 
