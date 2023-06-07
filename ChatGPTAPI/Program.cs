@@ -1,4 +1,14 @@
+using ChatGPTAPI.Data;
+using Microsoft.EntityFrameworkCore;
+ 
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddJsonFile(
+      "appsettings.json", optional: true, reloadOnChange: true
+  ).AddEnvironmentVariables();
+//builder.Services.Add;
+builder.Services.AddDbContext<ChatgptdbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("ChatGPTContext")));
 
 // Add services to the container.
 
