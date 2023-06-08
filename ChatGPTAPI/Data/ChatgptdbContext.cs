@@ -8,6 +8,7 @@ namespace ChatGPTAPI.Data
     {
         public ChatgptdbContext(DbContextOptions<ChatgptdbContext> options) : base(options)
         { }
-        public virtual DbSet<ChatGpt> Users { get; set; }
+
+        public virtual DbSet<ChatGpt> MomSummary { get; set; }  
     }
 }
