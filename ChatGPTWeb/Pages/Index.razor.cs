@@ -23,8 +23,10 @@ namespace ChatGPTWeb.Pages
 
         protected override void OnInitialized()
         {
-            Organization = _configuration["OpenAIServiceOptions:Organization"] ?? "";
-            ApiKey = _configuration["OpenAIServiceOptions:ApiKey"] ?? "";
+            //Organization = _configuration["OpenAIServiceOptions:Organization"] ?? "";
+            //ApiKey = _configuration["OpenAIServiceOptions:ApiKey"] ?? "";
+            Organization = "org-XcjpXmu1ownH3iRO1IkUwkky";
+           ApiKey = "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";
         }
 
         private async Task OnInputFile(InputFileChangeEventArgs e)
