@@ -17,6 +17,6 @@ namespace ChatGPTAPI.Data
         }
 
         public DbSet<FileDetails> FileDetails { get; set; }
-        public virtual DbSet<ChatGpt> MomSummary { get; set; }
+        public virtual DbSet<ChatUser> MomSummary { get; set; }
     }
 }
