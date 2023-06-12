@@ -2,7 +2,8 @@ using OpenAI.GPT3.Extensions;
 
 using ChatGPTAPI.Data;
 using Microsoft.EntityFrameworkCore;
- 
+using ChatGPTAPI.Repository.Interface;
+using ChatGPTAPI.Repository.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IChatGPTRepository, ChatGPTRepository>();
+
 
 builder.Configuration.AddJsonFile(
         "appsettings.json", optional: true, reloadOnChange: true

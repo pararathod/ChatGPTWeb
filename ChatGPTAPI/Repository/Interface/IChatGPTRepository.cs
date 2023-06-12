@@ -1,9 +1,15 @@
 ﻿using ChatGPTAPI.Models;
+using ChatGPTAPI.Repository.Services;
+using Microsoft.Extensions.Logging;
 
 namespace ChatGPTAPI.Repository.Interface
 {
     public interface IChatGPTRepository
     {
-        ChatGpt Add(ChatGpt chatrep);
+        Task<bool> SaveAsync();
+        //void GetAllEvent();
+
+        IUserService UserRepo { get; }
+        
     }
 }

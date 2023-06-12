@@ -1,7 +1,9 @@
 ﻿using ChatGPTAPI.Data;
 using ChatGPTAPI.Models;
+using ChatGPTAPI.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using static OpenAI.GPT3.ObjectModels.SharedModels.IOpenAiModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,111 +14,95 @@ namespace ChatGPTAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly ChatgptdbContext _context;
+        private readonly IChatGPTRepository _service;
 
-        public UserController(ChatgptdbContext context)
+        public UserController(IChatGPTRepository service)
         {
-            _context = context;
+            _service = service;
         }
 
         // GET: api/<UserController>
         [HttpGet]
 
-        public async Task<ActionResult<IEnumerable<ChatGpt>>> Get()      
+        public async Task<ActionResult<IEnumerable<ChatGpt>>> GetAll()
         {
-            if (_context.MomSummary == null)
+            var events = await _service.UserRepo.GetAllEvent();
+
+            if (!events.Any())
             {
                 return NotFound();
             }
-            return await _context.MomSummary.ToListAsync();
+
+            return Ok(events);
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ChatGpt>> Get(int id)
+        public async Task<IEnumerable<ChatGpt>> Get(int id)
         {
-            if (_context.MomSummary == null)
-            {
-                return NotFound();
-            }
-            var usrModel = await _context.MomSummary.FindAsync(id);
+            IEnumerable<ChatGpt> events = await _service.UserRepo.GetById(id);
 
-            if (usrModel == null)
-            {
-                return NotFound();
-            }
-
-            return usrModel;
+            return events;
         }
 
-        // POST api/<UserController>
+        //POST api/<UserController>
         [HttpPost]
-        public async Task<ActionResult<ChatGpt>> Post(ChatGpt chtgpt)       
+        public async Task<IActionResult> Save(ChatGpt chtgpt)
         {
-            if (_context.MomSummary == null)
+            try
             {
-                return Problem("Entity set 'UserContext.UserModel'  is null.");
+                await _service.UserRepo.Save(chtgpt);
+                return Ok();
             }
-            _context.MomSummary.Add(chtgpt);
-            await _context.SaveChangesAsync();
+            catch (Exception ex)
+            {
 
-            return Ok();
+                return BadRequest(ex.Message);
+            }
 
         }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _service.UserRepo.Delete(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+
 
         // PUT api/<UserController>/5
         [HttpPut]
-        public async Task<IActionResult> Put(ChatGpt gpt)       
+        public async Task<IActionResult> Put(ChatGpt gpt)
         {
-            if (gpt == null)
-            {
-                return BadRequest();
-            }
-            _context.Entry(gpt).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _service.UserRepo.Put(gpt);
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!CHTModelExists(gpt.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+
+                return BadRequest(ex.Message);
             }
 
-            return NoContent();
         }
 
-        private bool CHTModelExists(int id)
-        {
-            return (_context.MomSummary?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        //private bool CHTModelExists(int id)
+        //{
+        //    return (_service.MomSummary?.Any(e => e.Id == id)).GetValueOrDefault();
+        //}
+
 
         // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-
-        public async Task<IActionResult> Delete(int id)        
-        {
-            if (_context.MomSummary == null)
-            {
-                return NotFound();
-            }
-            var bookModel = await _context.MomSummary.FindAsync(id);
-            if (bookModel == null)
-            {
-                return NotFound();
-            }
-
-            _context.MomSummary.Remove(bookModel);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
     }
 }
