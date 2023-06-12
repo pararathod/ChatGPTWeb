@@ -1,5 +1,5 @@
 ﻿using ChatGPTAPI.Data;
-using ChatGPTAPI.Models;
+using ChatGPTAPI.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static OpenAI.GPT3.ObjectModels.SharedModels.IOpenAiModels;
@@ -12,9 +12,9 @@ namespace ChatGPTAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly ChatgptdbContext _context;
+        private readonly DbContextClass _context;
 
-        public UserController(ChatgptdbContext context)
+        public UserController(DbContextClass context)
         {
             _context = context;
         }

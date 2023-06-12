@@ -1,4 +1,5 @@
-﻿using ChatGPTAPI.Models;
+﻿using ChatGPTAPI.Entities;
+using ChatGPTAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -9,38 +10,37 @@ namespace ChatGPTAPI.Controllers
     [ApiController]
     public class FilesController : ControllerBase
     {
-        private readonly IWebHostEnvironment _env;
+        private readonly IFileService _uploadService;
 
-        public FilesController(IWebHostEnvironment env)
+        public FilesController(IFileService uploadService)
         {
-            _env = env;
+            _uploadService = uploadService;
         }
 
-        [HttpPost("files")]
-        public async Task<ActionResult<List<UploadResult>>> UploadFile(List<IFormFile> files)
+        /// <summary>
+        /// Single File Upload
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        [HttpPost("PostSingleFile")]
+        public async Task<ActionResult> PostSingleFile([FromForm] FileUploadModel fileDetails)
         {
-            List<UploadResult> uploadResults = new List<UploadResult>();
-            foreach (var file in files)
+            if (fileDetails == null)
             {
-                var uploadResult = new UploadResult();
-                string trustedFileNameForFileStorage;
-                var untrustedFileName = file.FileName;
-                uploadResult.FileName = untrustedFileName;
-                var trustedFileNameForDisplay = WebUtility.HtmlDecode(untrustedFileName);
-
-                trustedFileNameForFileStorage = Path.GetRandomFileName();
-
-                var path = Path.Combine(_env.ContentRootPath, "uploads", trustedFileNameForFileStorage);
-
-                await using FileStream fs = new(path, FileMode.Create);
-                await file.CopyToAsync(fs);
-
-                uploadResult.StoredFileName = trustedFileNameForFileStorage;
-                uploadResults.Add(uploadResult);
-
+                return BadRequest();
             }
-            return Ok(uploadResults);
+
+            try
+            {
+                await _uploadService.PostFileAsync(fileDetails.FileDetails, fileDetails.FileType);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-    }
+        
+    }       
 }

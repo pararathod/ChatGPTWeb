@@ -6,8 +6,8 @@ namespace ChatGPTAPI.Services
     {
         public Task PostFileAsync(IFormFile fileData, FileType fileType);
 
-        public Task PostMultiFileAsync(List<FileUploadModel> fileData);
+        //public Task PostMultiFileAsync(List<FileUploadModel> fileData);
 
-        public Task DownloadFileById(int fileName);
+       // public Task DownloadFileById(int fileName);
     }
 }
