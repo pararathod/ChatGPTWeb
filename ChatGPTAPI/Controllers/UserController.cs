@@ -1,5 +1,5 @@
 ﻿using ChatGPTAPI.Data;
-using ChatGPTAPI.Models;
+using ChatGPTAPI.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static OpenAI.GPT3.ObjectModels.SharedModels.IOpenAiModels;
@@ -12,9 +12,9 @@ namespace ChatGPTAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly ChatgptdbContext _context;
+        private readonly DbContextClass _context;
 
-        public UserController(ChatgptdbContext context)
+        public UserController(DbContextClass context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace ChatGPTAPI.Controllers
         // GET: api/<UserController>
         [HttpGet]
 
-        public async Task<ActionResult<IEnumerable<ChatGpt>>> Get()      
+        public async Task<ActionResult<IEnumerable<ChatUser>>> Get()      
         {
             if (_context.MomSummary == null)
             {
@@ -33,7 +33,7 @@ namespace ChatGPTAPI.Controllers
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ChatGpt>> Get(int id)
+        public async Task<ActionResult<ChatUser>> Get(int id)
         {
             if (_context.MomSummary == null)
             {
@@ -51,13 +51,13 @@ namespace ChatGPTAPI.Controllers
 
         // POST api/<UserController>
         [HttpPost]
-        public async Task<ActionResult<ChatGpt>> Post(ChatGpt chtgpt)       
+        public async Task<ActionResult<ChatUser>> Post(ChatUser chatUser)       
         {
             if (_context.MomSummary == null)
             {
                 return Problem("Entity set 'UserContext.UserModel'  is null.");
             }
-            _context.MomSummary.Add(chtgpt);
+            _context.MomSummary.Add(chatUser);
             await _context.SaveChangesAsync();
 
             return Ok();
@@ -66,13 +66,13 @@ namespace ChatGPTAPI.Controllers
 
         // PUT api/<UserController>/5
         [HttpPut]
-        public async Task<IActionResult> Put(ChatGpt gpt)       
+        public async Task<IActionResult> Put(ChatUser user)       
         {
-            if (gpt == null)
+            if (user == null)
             {
                 return BadRequest();
             }
-            _context.Entry(gpt).State = EntityState.Modified;
+            _context.Entry(user).State = EntityState.Modified;
 
             try
             {
@@ -80,7 +80,7 @@ namespace ChatGPTAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CHTModelExists(gpt.Id))
+                if (!CHTModelExists(user.Id))
                 {
                     return NotFound();
                 }
